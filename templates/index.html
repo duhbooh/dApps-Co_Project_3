@@ -3,36 +3,43 @@
 <head>
     <title>Market Data</title>
     <script>
-        function fetchData(route) {
+        function fetchData(route, callback) {
             fetch(route)
                 .then(response => response.json())
-                .then(data => {
-                    document.getElementById('data').innerText = JSON.stringify(data, null, 2);
-                });
+                .then(data => callback(data))
+                .catch(error => console.error('Error fetching data:', error));
         }
-    
+
         function fetchSymbols() {
-            fetch('/cryptos')
-                .then(response => response.json())
-                .then(symbols => {
-                    var select = document.getElementById('symbolSelect');
-                    symbols.forEach(symbol => {
-                        var option = document.createElement('option');
-                        option.value = symbol;
-                        option.text = symbol;
-                        select.add(option);
-                    });
+            fetchData('/cryptos', symbols => {
+                var select = document.getElementById('symbolSelect');
+                symbols.forEach(symbol => {
+                    var option = document.createElement('option');
+                    option.value = symbol;
+                    option.text = symbol;
+                    select.add(option);
                 });
+            });
         }
-    
+
         function fetchOhlcvData() {
             var symbol = document.getElementById('symbolSelect').value;
-            var encodedSymbol = encodeURIComponent(symbol);
-            fetchData('/ohlcv/' + encodedSymbol);
+            if (symbol) {
+                var encodedSymbol = encodeURIComponent(symbol);
+                fetchData('/ohlcv/' + encodedSymbol, data => {
+                    document.getElementById('ohlcvData').innerText = JSON.stringify(data, null, 2);
+                });
+                fetchChart(symbol);
+            }
         }
-    
+
+        function fetchChart(symbol) {
+            var iframe = document.getElementById('chartFrame');
+            iframe.src = '/chart/' + encodeURIComponent(symbol);
+        }
+
         window.onload = fetchSymbols;
-    </script>    
+    </script>
 </head>
 <body>
     <h1>Market Data</h1>
@@ -42,6 +49,13 @@
             <option value="">Select a symbol</option>
         </select>
     </div>
-    <pre id="data"></pre>
+    <div>
+        <h2>OHLCV Data</h2>
+        <!-- <pre id="ohlcvData">Select a symbol to view OHLCV data</pre> -->
+    </div>
+    <div>
+        <h2>Chart</h2>
+        <iframe id="chartFrame" width="600" height="400" style="border:none;"></iframe>
+    </div>
 </body>
 </html>
