@@ -2,53 +2,7 @@
 <html>
 <head>
     <title>Crypto Market Data Visualization</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-        }
-        h1 {
-            color: #0066cc;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        button {
-            background-color: #0066cc;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            margin: 10px 5px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #004a99;
-        }
-        select, pre {
-            margin-top: 10px;
-        }
-        .chart-container {
-            margin-top: 20px;
-        }
-        .chart {
-            width: 600px;
-            height: 400px;
-            border: 2px solid #0066cc;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
     <script>
         function fetchData(route, callback) {
@@ -109,6 +63,7 @@
 <body>
     <div class="container">
         <h1>Crypto Market Data Visualization</h1>
+        <img id="title_img" src="{{ url_for('static', filename='img/doge_coin.png') }}" alt="Doge Coin">
         <p>Welcome to our educational platform where you can explore a quarter's worth of price movement and view 1-day candlestick data for various cryptocurrencies. Select a cryptocurrency symbol to interact with the raw data and visual charts.</p>
         <div>
             <label for="symbolSelect">Select Symbol:</label>
@@ -124,8 +79,7 @@
             <h2>OHLCV Data</h2>
             <pre id="ohlcvData">Select a symbol and click "Show Raw Data" to view OHLCV data.</pre>
         </div>
-        <div>
-            <h2>Chart</h2>
+        <div class="chart-container">
             <div id="chartContainer" class="chart"></div>
         </div>
     </div>
