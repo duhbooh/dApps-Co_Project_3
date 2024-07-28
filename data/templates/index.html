@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Market Data</title>
+    <script>
+        function fetchData(route) {
+            fetch(route)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('data').innerText = JSON.stringify(data, null, 2);
+                });
+        }
+    
+        function fetchSymbols() {
+            fetch('/cryptos')
+                .then(response => response.json())
+                .then(symbols => {
+                    var select = document.getElementById('symbolSelect');
+                    symbols.forEach(symbol => {
+                        var option = document.createElement('option');
+                        option.value = symbol;
+                        option.text = symbol;
+                        select.add(option);
+                    });
+                });
+        }
+    
+        function fetchOhlcvData() {
+            var symbol = document.getElementById('symbolSelect').value;
+            var encodedSymbol = encodeURIComponent(symbol);
+            fetchData('/ohlcv/' + encodedSymbol);
+        }
+    
+        window.onload = fetchSymbols;
+    </script>    
+</head>
+<body>
+    <h1>Market Data</h1>
+    <div>
+        <label for="symbolSelect">Select Symbol:</label>
+        <select id="symbolSelect" onchange="fetchOhlcvData()">
+            <option value="">Select a symbol</option>
+        </select>
+    </div>
+    <pre id="data"></pre>
+</body>
+</html>
