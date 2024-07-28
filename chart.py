@@ -35,12 +35,24 @@ def generate_ticks(ohlc_df):
     
     return ticks_df
 
+from models import OHLCV, Session
+
 def generate_chart(symbol):
     try:
-        csv_filename = f'data/{symbol}_ohlcv_data.csv'
-        df1 = pd.read_csv(csv_filename)
-        df1['date'] = pd.to_datetime(df1['date'])
+        session = Session()
+        ohlcv_data = session.query(OHLCV).filter_by(symbol=symbol).all()
+        df1 = pd.DataFrame([{
+            "date": ohlcv.date,
+            "open": ohlcv.open,
+            "high": ohlcv.high,
+            "low": ohlcv.low,
+            "close": ohlcv.close,
+            "volume": ohlcv.volume,
+            "average": ohlcv.average,
+            "barCount": ohlcv.barCount
+        } for ohlcv in ohlcv_data])
 
+        df1['date'] = pd.to_datetime(df1['date'])
         ticks_df = generate_ticks(df1)
         
         chart = Chart()

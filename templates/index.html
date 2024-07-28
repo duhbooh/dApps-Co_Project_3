@@ -1,7 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Market Data</title>
+    <title>Crypto Market Data Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #0066cc;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background-color: #0066cc;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #004a99;
+        }
+        select, pre, iframe {
+            margin-top: 10px;
+        }
+        iframe {
+            border: 2px solid #0066cc;
+            border-radius: 5px;
+        }
+    </style>
     <script>
         function fetchData(route, callback) {
             fetch(route)
@@ -29,33 +70,43 @@
                 fetchData('/ohlcv/' + encodedSymbol, data => {
                     document.getElementById('ohlcvData').innerText = JSON.stringify(data, null, 2);
                 });
-                fetchChart(symbol);
             }
         }
 
-        function fetchChart(symbol) {
-            var iframe = document.getElementById('chartFrame');
-            iframe.src = '/chart/' + encodeURIComponent(symbol);
+        function fetchChart() {
+            var symbol = document.getElementById('symbolSelect').value;
+            if (symbol) {
+                var encodedSymbol = encodeURIComponent(symbol);
+                var iframe = document.getElementById('chartFrame');
+                iframe.src = '/chart/' + encodedSymbol;
+            }
         }
 
         window.onload = fetchSymbols;
     </script>
 </head>
 <body>
-    <h1>Market Data</h1>
-    <div>
-        <label for="symbolSelect">Select Symbol:</label>
-        <select id="symbolSelect" onchange="fetchOhlcvData()">
-            <option value="">Select a symbol</option>
-        </select>
-    </div>
-    <div>
-        <h2>OHLCV Data</h2>
-        <!-- <pre id="ohlcvData">Select a symbol to view OHLCV data</pre> -->
-    </div>
-    <div>
-        <h2>Chart</h2>
-        <iframe id="chartFrame" width="600" height="400" style="border:none;"></iframe>
+    <div class="container">
+        <h1>Crypto Market Data Visualization</h1>
+        <p>Welcome to our educational platform where you can explore a quarter's worth of price movement and view 1-day candlestick data for various cryptocurrencies. Select a cryptocurrency symbol to interact with the raw data and visual charts.</p>
+        <div>
+            <label for="symbolSelect">Select Symbol:</label>
+            <select id="symbolSelect">
+                <option value="">Select a symbol</option>
+            </select>
+        </div>
+        <div>
+            <button onclick="fetchOhlcvData()">Show Raw Data</button>
+            <button onclick="fetchChart()">Show Chart</button>
+        </div>
+        <div>
+            <h2>OHLCV Data</h2>
+            <pre id="ohlcvData">Select a symbol and click "Show Raw Data" to view OHLCV data.</pre>
+        </div>
+        <div>
+            <h2>Chart</h2>
+            <iframe id="chartFrame" width="600" height="400" style="border:none;"></iframe>
+        </div>
     </div>
 </body>
 </html>
