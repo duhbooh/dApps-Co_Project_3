@@ -5,6 +5,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
     <script>
+        let ohlcvData = [];
+        let currentPage = 1;
+        const recordsPerPage = 5;
+
         function fetchData(route, callback) {
             fetch(route)
                 .then(response => response.json())
@@ -29,8 +33,35 @@
             if (symbol) {
                 var encodedSymbol = encodeURIComponent(symbol);
                 fetchData('/ohlcv/' + encodedSymbol, data => {
-                    document.getElementById('ohlcvData').innerText = JSON.stringify(data, null, 2);
+                    ohlcvData = data;
+                    currentPage = 1;
+                    displayOhlcvData();
+                    document.getElementById('ohlcvDataContainer').style.display = 'block';
+                    document.getElementById('chartContainer').style.display = 'none';
                 });
+            }
+        }
+
+        function displayOhlcvData() {
+            const startIndex = (currentPage - 1) * recordsPerPage;
+            const endIndex = startIndex + recordsPerPage;
+            const dataToShow = ohlcvData.slice(startIndex, endIndex);
+
+            document.getElementById('ohlcvData').innerText = JSON.stringify(dataToShow, null, 2);
+            document.getElementById('pageNumber').innerText = `Page ${currentPage} of ${Math.ceil(ohlcvData.length / recordsPerPage)}`;
+        }
+
+        function nextPage() {
+            if (currentPage * recordsPerPage < ohlcvData.length) {
+                currentPage++;
+                displayOhlcvData();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                displayOhlcvData();
             }
         }
 
@@ -53,12 +84,25 @@
             var symbol = document.getElementById('symbolSelect').value;
             if (symbol) {
                 var encodedSymbol = encodeURIComponent(symbol);
-                fetchData('/ohlcv/' + encodedSymbol, createChart);
+                fetchData('/ohlcv/' + encodedSymbol, data => {
+                    createChart(data);
+                    document.getElementById('chartWrapper').style.display = 'flex';
+                    document.getElementById('chartContainer').style.display = 'block';
+                    document.getElementById('ohlcvDataContainer').style.display = 'none';
+                });
             }
         }
 
         window.onload = fetchSymbols;
     </script>
+    <style>
+        .centered-flex {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -75,12 +119,17 @@
             <button onclick="fetchOhlcvData()">Show Raw Data</button>
             <button onclick="fetchChart()">Show Chart</button>
         </div>
-        <div>
+        <div id="ohlcvDataContainer" style="display: none;">
             <h2>OHLCV Data</h2>
             <pre id="ohlcvData">Select a symbol and click "Show Raw Data" to view OHLCV data.</pre>
+            <div class="pagination">
+                <button onclick="prevPage()">Previous</button>
+                <span id="pageNumber">Page 1</span>
+                <button onclick="nextPage()">Next</button>
+            </div>
         </div>
-        <div class="chart-container">
-            <div id="chartContainer" class="chart"></div>
+        <div id="chartWrapper" class="centered-flex" style="display: none;">
+            <div id="chartContainer" style="display: none;"></div>
         </div>
     </div>
 </body>
