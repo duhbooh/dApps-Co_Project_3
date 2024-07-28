@@ -1,13 +1,66 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Static Chart</title>
-  </head>
-  <body>
-    <h2>Binance BTCUSDT Chart</h2>
-    <div id="tvchart"></div>
-  </body>
-  <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
-  <script type="text/javascript" src="main.js"></script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3x2 Grid of Charts</title>
+    <script src="https://unpkg.com/lightweight-charts@3.4.0/dist/lightweight-charts.min.js"></script>
+    <style>
+        .chart-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 10px;
+            height: 100vh;
+            width: 100vw;
+        }
+        .chart {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <div id="chart1" class="chart"></div>
+        <div id="chart2" class="chart"></div>
+        <div id="chart3" class="chart"></div>
+        <div id="chart4" class="chart"></div>
+        <div id="chart5" class="chart"></div>
+        <div id="chart6" class="chart"></div>
+    </div>
+
+    <script>
+        function createChart(containerId, title) {
+            const container = document.getElementById(containerId);
+            const chart = LightweightCharts.createChart(container, {
+                width: container.clientWidth,
+                height: container.clientHeight,
+                crossHair: { mode: 0 },
+                title: title,
+            });
+            
+            // Example data
+            const lineSeries = chart.lineSeries({
+                data: [
+                    { time: '2024-01-01', value: 71.25 },
+                    { time: '2024-01-02', value: 69.5 },
+                    { time: '2024-01-03', value: 75.3 },
+                    // Add more data here
+                ]
+            });
+            
+            return chart;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createChart('chart1', 'Chart 1');
+            createChart('chart2', 'Chart 2');
+            createChart('chart3', 'Chart 3');
+            createChart('chart4', 'Chart 4');
+            createChart('chart5', 'Chart 5');
+            createChart('chart6', 'Chart 6');
+        });
+    </script>
+</body>
 </html>
