@@ -35,14 +35,21 @@
         button:hover {
             background-color: #004a99;
         }
-        select, pre, iframe {
+        select, pre {
             margin-top: 10px;
         }
-        iframe {
+        .chart-container {
+            margin-top: 20px;
+        }
+        .chart {
+            width: 600px;
+            height: 400px;
             border: 2px solid #0066cc;
             border-radius: 5px;
+            margin-top: 10px;
         }
     </style>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
     <script>
         function fetchData(route, callback) {
             fetch(route)
@@ -73,12 +80,26 @@
             }
         }
 
+        function createChart(data) {
+            const chartContainer = document.getElementById('chartContainer');
+            chartContainer.innerHTML = ''; // Clear previous chart
+            const chart = LightweightCharts.createChart(chartContainer, { width: 600, height: 400 });
+            const candlestickSeries = chart.addCandlestickSeries();
+            const formattedData = data.map(item => ({
+                time: new Date(item.date).toISOString().split('T')[0],
+                open: item.open,
+                high: item.high,
+                low: item.low,
+                close: item.close
+            }));
+            candlestickSeries.setData(formattedData);
+        }
+
         function fetchChart() {
             var symbol = document.getElementById('symbolSelect').value;
             if (symbol) {
                 var encodedSymbol = encodeURIComponent(symbol);
-                var iframe = document.getElementById('chartFrame');
-                iframe.src = '/chart/' + encodedSymbol;
+                fetchData('/ohlcv/' + encodedSymbol, createChart);
             }
         }
 
@@ -105,7 +126,7 @@
         </div>
         <div>
             <h2>Chart</h2>
-            <iframe id="chartFrame" width="600" height="400" style="border:none;"></iframe>
+            <div id="chartContainer" class="chart"></div>
         </div>
     </div>
 </body>
