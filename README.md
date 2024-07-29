@@ -96,7 +96,7 @@ Certainly! Here is the rewritten section to make sense without adding anything:
 
 ### Summary
 - **Frontend**: HTML, CSS, Vanilla JavaScript, Fetch API, Lightweight Charts.
-- **Backend**: Flask, Python, Pandas, NumPy, SQLAlchemy, and potentially PostgreSQL/MySQL/SQLite.
+- **Backend**: Flask, Python, Pandas, NumPy, SQLAlchemy, and SQLite.
 - **Development & Deployment**: IDEs, Git, cloud deployment platforms.
 
 
