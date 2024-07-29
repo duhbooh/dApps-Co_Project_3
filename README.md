@@ -76,7 +76,7 @@ Certainly! Here is the rewritten section to make sense without adding anything:
   - **Datetime**: For date and time manipulations.
 - **Database**:
   - **SQLAlchemy**: ORM (Object-Relational Mapping) tool for database interactions.
-  - **PostgreSQL/MySQL/SQLite**: Likely database systems for storing OHLCV data.
+  - **PostgreSQL/MySQL/SQLite**: Database systems for storing OHLCV data.
 
 ### APIs
 - **Flask Routes**:
@@ -87,12 +87,9 @@ Certainly! Here is the rewritten section to make sense without adding anything:
 
 ### Development & Deployment
 - **Development Tools**:
-  - **VS Code/PyCharm/IDE**: Code editors or IDEs for development.
-  - **Git**: Version control system for managing code changes.
-- **Deployment**:
-  - **Heroku/AWS/GCP/Azure**: Cloud platforms for deploying your Flask application.
+  - **VS Code**: Code editors or IDEs for development.
 - **Hosting**:
-  - **GitHub/Bitbucket**: For hosting the source code and version control.
+  - **GitHub**: For hosting the source code and version control.
 - **Package Management**:
   - **pip**: Python package installer for managing Flask, Pandas, NumPy, etc.
   - **requirements.txt**: To list the Python dependencies for your Flask app.
