@@ -100,7 +100,7 @@ Certainly! Here is the rewritten section to make sense without adding anything:
 - **Development & Deployment**: IDEs, Git, cloud deployment platforms.
 
 
-
+Market information gleaned from API's on https://www.tradingview.com/
 
 
 
