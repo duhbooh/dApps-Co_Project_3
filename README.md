@@ -48,11 +48,6 @@ This project aims to create a comprehensive data visualization track using a sub
 
 This project aims to create a comprehensive data visualization track using a substantial dataset to highlight key insights through various visualizations. The goal is to provide clear, digestible visual narratives that can be interpreted easily by users of all levels, leveraging both common and novel tools in data visualization.
 
-The purpose of this project is to demonstrate the power of data visualization in uncovering trends and patterns within a dataset. By utilizing advanced visualization techniques and interactive elements, the project seeks to enhance user engagement and facilitate deeper understanding of the data.
-
-## Technology Stack
-Certainly! Here is the rewritten section to make sense without adding anything:
-
 ---
 
 ## Technology Stack
