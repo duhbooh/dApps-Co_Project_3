@@ -3,7 +3,7 @@ by Reah Byrd, Djuvane Martin, and Karin Treski
 
 ## Introduction
 
-Welcome to the Blockchain and Cryptocurrency Presentation. This presentation covers a comprehensive range of topics related to blockchain technology, cryptocurrencies, non-fungible tokens (NFTs), and their various applications and impacts. This repository includes the slides, notes, and additional resources used during the presentation.
+Welcome to the Blockchain and Cryptocurrency Presentation. This presentation covers a comprehensive range of topics related to blockchain technology, cryptocurrencies, non-fungible tokens (NFTs), and their various applications and impacts. This repository includes the slides, notes, and an interactive Crypto Currency Market Data webpage.
 
 ## Contents
 
@@ -38,11 +38,6 @@ Welcome to the Blockchain and Cryptocurrency Presentation. This presentation cov
 -Combined Summary of Platforms
 
 ## Comparison of Axie Infinity, The Sandbox, and Decentraland
-
-
-## Conclusion
-
-This project aims to create a comprehensive data visualization track using a substantial dataset to highlight key insights through various visualizations. The goal is to provide clear, digestible visual narratives that can be interpreted easily by users of all levels, leveraging both common and novel tools in data visualization.
 
 ## Purpose
 
